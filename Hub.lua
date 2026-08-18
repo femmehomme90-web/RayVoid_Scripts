@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-08-18 14:51:28
+    Build: 2026-08-18 14:53:11
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -15,7 +15,7 @@ local MAP = {
 	["8841437826"] = {{n="Capybaras-VS-Plants",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Capybaras-VS-Plants"}},
 	["9330616906"] = {{n="BE-A-FISH-BAIT",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/BE-A-FISH-BAIT"}},
 	["9348272796"] = {{n="Survive-Zombie-Arena",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Survive-Zombie-Arena"}},
-	["9735742666"] = {{n="[] Sell Your Fruit!",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/86077558178558.lua"}},
+	["9735742666"] = {{n="[] Sell Your Fruit!",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/86077558178558.lua"},{n="[] Sell Your Fruit!",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/86077558178558.lua"}},
 	["9837325548"] = {{n="Car-Flipper",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Car-Flipper"}},
 	["9837612476"] = {{n="Mini-War",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Mini-War"}},
 	["9860573128"] = {{n="Break-For-Cars",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Break-For-Cars"}},
