@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-08-18 11:40:17
+    Build: 2026-08-18 11:40:18
 ]]
 
 local UI_URL  = ""
@@ -10,6 +10,7 @@ local DISCORD = ""
 local MAP = {
 	["6035872082"] = {{n="RIVALS_skinChanger",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Rivals"},{n="RivalHack",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/RivalHack"}},
 	["9837612476"] = {{n="Mini-War",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Mini-War"}},
+	["9860573128"] = {{n="Break-For-Cars",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Break-For-Cars"}},
 	["10039338037"] = {{n="Build-A-Ring-Farm",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Build-A-Ring-Farm"}},
 	["10081292501"] = {{n="Bomb-Fishing",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Bomb-Fishing"}},
 	["10198343402"] = {{n="Paint-Or-OOF",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/POF"}},
