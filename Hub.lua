@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-08-18 11:52:01
+    Build: 2026-08-18 11:52:03
 ]]
 
 local UI_URL  = ""
