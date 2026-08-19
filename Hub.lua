@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-08-19 09:21:14
+    Build: 2026-08-19 09:22:07
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -11,7 +11,7 @@ local MAP = {
 	["4777817887"] = {{n="Blade-Ball",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Blade-Ball"}},
 	["6035872082"] = {{n="RIVALS_skinChanger",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Rivals"},{n="RivalHack",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/RivalHack"}},
 	["7488668004"] = {{n="Bake-or-Die",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Bake-or-Die"}},
-	["7633926880"] = {{n="cs",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/114234929420007.lua"}},
+	["7633926880"] = {{n="cs",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/114234929420007.lua"},{n="[UPDATE!] BloxStrike",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/114234929420007.lua"}},
 	["8125244608"] = {{n="8",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/121180020176396.lua"}},
 	["8841437826"] = {{n="Capybaras-VS-Plants",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Capybaras-VS-Plants"}},
 	["9292198907"] = {{n="[Hatch]Slimes vs Brainrot",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/119414503270860.lua"},{n="[Hatch]Slimes vs Brainrot",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/119414503270860.lua"}},
