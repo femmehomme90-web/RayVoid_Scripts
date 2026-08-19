@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-08-19 12:14:33
+    Build: 2026-08-19 14:33:09
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -11,13 +11,13 @@ local MAP = {
 	["4777817887"] = {{n="Blade-Ball",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Blade-Ball"}},
 	["6035872082"] = {{n="RIVALS_skinChanger",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Rivals"},{n="RivalHack",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/RivalHack"}},
 	["7488668004"] = {{n="Bake-or-Die",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Bake-or-Die"}},
-	["7633926880"] = {{n="cs",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/114234929420007.lua"},{n="[UPDATE!] BloxStrike",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/114234929420007.lua"}},
+	["7633926880"] = {{n="[UPDATE!] BloxStrike",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/114234929420007.lua"}},
 	["8125244608"] = {{n="8",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/121180020176396.lua"}},
 	["8841437826"] = {{n="Capybaras-VS-Plants",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Capybaras-VS-Plants"}},
-	["9292198907"] = {{n="[Hatch]Slimes vs Brainrot",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/119414503270860.lua"},{n="[Hatch]Slimes vs Brainrot",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/119414503270860.lua"}},
+	["9292198907"] = {{n="[Hatch]Slimes vs Brainrot",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/119414503270860.lua"}},
 	["9330616906"] = {{n="BE-A-FISH-BAIT",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/BE-A-FISH-BAIT"}},
 	["9348272796"] = {{n="Survive-Zombie-Arena",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Survive-Zombie-Arena"}},
-	["9735742666"] = {{n="[] Sell Your Fruit!",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/86077558178558.lua"},{n="[] Sell Your Fruit!",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/86077558178558.lua"}},
+	["9735742666"] = {{n="[] Sell Your Fruit!",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/86077558178558.lua"}},
 	["9837325548"] = {{n="Car-Flipper",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Car-Flipper"}},
 	["9837612476"] = {{n="Mini-War",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Mini-War"}},
 	["9860573128"] = {{n="Break-For-Cars",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Break-For-Cars"}},
@@ -30,15 +30,15 @@ local MAP = {
 	["10209534490"] = {{n="Chicken-Farm",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Chicken-Farm"}},
 	["10232653162"] = {{n="6",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/placeiddujeu"}},
 	["10261267004"] = {{n="Storage-Hunters-Open-World",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Storage-Hunters-Open-World"}},
-	["10336278580"] = {{n="[UPD][] Sell Ores",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/122572082932179.lua"},{n="[UPD][] Sell Ores",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/122572082932179.lua"}},
+	["10336278580"] = {{n="[UPD][] Sell Ores",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/122572082932179.lua"}},
 	["10338952197"] = {{n="Grow-a-Chicken-Fighter",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Grow-a-Chicken-Fighter"}},
 	["10349044906"] = {{n="5-55",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/5"}},
 	["10364552556"] = {{n="2",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/2.lua"}},
 	["10406668651"] = {{n="Mine-a-Planet",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Mine-a-Planet"}},
 	["10410945205"] = {{n="1",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/1"}},
 	["10454554751"] = {{n="Unbox-ASMR",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Unbox-ASMR"}},
-	["10481060526"] = {{n="[NOW] RNG vs Fruit",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/109123260298300.lua"},{n="[NOW] RNG vs Fruit",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/109123260298300.lua"}},
-	["10551595617"] = {{n="4",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/4.lua"},{n="133294838637122",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/4.lua"}},
+	["10481060526"] = {{n="[NOW] RNG vs Fruit",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/109123260298300.lua"}},
+	["10551595617"] = {{n="133294838637122",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/4.lua"}},
 }
 
 -- ---------------------------------------------------------------------------
