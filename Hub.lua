@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-08-19 09:06:56
+    Build: 2026-08-19 09:09:45
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -35,7 +35,7 @@ local MAP = {
 	["10406668651"] = {{n="Mine-a-Planet",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Mine-a-Planet"}},
 	["10410945205"] = {{n="1",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/1"}},
 	["10454554751"] = {{n="Unbox-ASMR",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Unbox-ASMR"}},
-	["10551595617"] = {{n="4",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/4.lua"}},
+	["10551595617"] = {{n="4",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/4.lua"},{n="133294838637122",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/4.lua"}},
 }
 
 -- ---------------------------------------------------------------------------
