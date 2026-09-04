@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-09-04 08:27:36
+    Build: 2026-09-04 09:45:03
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
