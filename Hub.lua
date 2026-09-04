@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-09-03 12:04:09
+    Build: 2026-09-04 08:27:36
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -31,16 +31,6 @@ local MAP = {
 	["10504837200"] = {{n="Roll-An-Army",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Roll-An-Army"}},
 	["10514280922"] = {{n="Roll-A-Gnome",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Roll-A-Gnome"}},
 }
-
--- Telemetrie rscripts.net -- fire-and-forget : task.spawn + pcall pour que
--- ni un echec reseau ni une erreur du script distant ne touche au
--- chargement du hub. Place avant le fast path (return anticipe) pour
--- s'executer sur toutes les branches.
-task.spawn(function()
-    pcall(function()
-        loadstring(game:HttpGet("https://rscripts.net/api/telemetry/client.lua?s=6a5a3e202a896dd9e41c5b90"))()
-    end)
-end)
 
 -- ---------------------------------------------------------------------------
 
