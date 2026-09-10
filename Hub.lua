@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-09-09 09:41:33
+    Build: 2026-09-10 20:19:21
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -87,7 +87,7 @@ Ui:SetScriptName("VoidHub")
 
 -- [ Plusieurs scripts pour ce jeu : selection ]
 if entries and #entries > 1 then
-    Ui:ShowCredit()
+    Ui:MainCredit()
 
     local Window = Ui:CreateWindow({
         Name = "VoidHub",
