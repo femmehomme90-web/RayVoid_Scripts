@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-09-15 12:55:12
+    Build: 2026-09-15 15:52:57
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -9,7 +9,7 @@ local DISCORD = "discord.gg/ddu37DWPJn"
 
 local MAP = {
 	["4777817887"] = {{n="Blade-Ball",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Blade-Ball"}},
-	["6035872082"] = {{n="RIVALS_skinChanger",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Rivals"},{n="RivalHack",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/RivalHack"}},
+	["6035872082"] = {{n="RIVALS_skinChanger",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Rivals"}},
 	["7488668004"] = {{n="Bake-or-Die",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Bake-or-Die"}},
 	["8841437826"] = {{n="Capybaras-VS-Plants",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Capybaras-VS-Plants"}},
 	["9330616906"] = {{n="BE-A-FISH-BAIT",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/BE-A-FISH-BAIT"}},
