@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-09-21 18:05:10
+    Build: 2026-09-22 07:14:06
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -9,6 +9,7 @@ local DISCORD = "discord.gg/ddu37DWPJn"
 
 local MAP = {
 	["4777817887"] = {{n="Blade-Ball",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Blade-Ball"}},
+	["5666473198"] = {{n="Soccer-Touch-Football",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Soccer-Touch-Football"}},
 	["6035872082"] = {{n="RIVALS_skinChanger",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Rivals"}},
 	["7488668004"] = {{n="Bake-or-Die",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Bake-or-Die"}},
 	["8841437826"] = {{n="Capybaras-VS-Plants",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Capybaras-VS-Plants"}},
