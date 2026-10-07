@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-10-07 07:34:08
+    Build: 2026-10-07 13:33:36
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -25,6 +25,7 @@ local MAP = {
 	["10198343402"] = {{n="Paint-Or-OOF",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/POF"}},
 	["10199301628"] = {{n="MEN",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Merge-a-Nuke"}},
 	["10209534490"] = {{n="Chicken-Farm",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Chicken-Farm"}},
+	["10258991999"] = {{n="Command-An-Army",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Command-An-Army"}},
 	["10261267004"] = {{n="Storage-Hunters-Open-World",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Storage-Hunters-Open-World"}},
 	["10290463156"] = {{n="[] Blow up Lucky Blocks For Cars",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/77084002576266.lua"}},
 	["10336278580"] = {{n="Sell-Ores",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Sell-Ores"}},
