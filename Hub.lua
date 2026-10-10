@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-10-10 13:33:34
+    Build: 2026-10-10 14:14:30
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -27,6 +27,7 @@ local MAP = {
 	["10209534490"] = {{n="Chicken-Farm",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Chicken-Farm"}},
 	["10258991999"] = {{n="Command-An-Army",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Command-An-Army"}},
 	["10261267004"] = {{n="Storage-Hunters-Open-World",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Storage-Hunters-Open-World"}},
+	["10282097014"] = {{n="Pet-Store-Tycoon",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Pet-Store-Tycoon"}},
 	["10290463156"] = {{n="[] Blow up Lucky Blocks For Cars",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/77084002576266.lua"}},
 	["10336278580"] = {{n="Sell-Ores",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Sell-Ores"}},
 	["10338952197"] = {{n="Grow-a-Chicken-Fighter",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Grow-a-Chicken-Fighter"}},
