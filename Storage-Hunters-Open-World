@@ -588,8 +588,8 @@ local Events = ReplicatedStorage:WaitForChild("Events")
 
 -- Remote handles: ONE table instead of ~30 root-level locals (200-local
 -- limit). Each handle is still assigned at the same place in the file as
--- before, so WaitForChild order and timing are unchanged; only the name
--- moved. New remotes go in here too: REMOTES.Foo = folder:WaitForChild("Foo").
+-- before; only the name moved. New remotes go in here too, always through
+-- REMOTES.Get (see GAME UPDATES below): REMOTES.Foo = REMOTES.Get(folder, "Foo").
 local REMOTES = {}
 
 -- DEV RELOAD / UNLOAD
@@ -620,16 +620,10 @@ function SESSION.Track(conn)
 	return conn
 end
 
--- BUILD PACING (2026-10-13, "most of the categories are empty except
--- teleport", "the UI opens but on a blank page" after a rejoin, Delta closing
--- on inject). After the tabs exist, the rest of the menu -- hundreds of
--- controls -- used to be built in ONE go without ever pausing. A PC does that
--- in a second or two. A phone running the hub's obfuscated build takes many
--- times longer, and a script that long without a break can be stopped by
--- Roblox (the tabs built after that point stay empty -- Teleport was the
--- first one fully done, so it was the only one that looked right) or the app
--- frozen that long gets closed. On a busy rejoin the same happened before the
--- first tab (Auto Farm) was filled: a blank page.
+-- BUILD PACING (2026-10-13). After the tabs exist, the rest of the menu --
+-- hundreds of controls -- used to be built in ONE go without ever pausing,
+-- which freezes a phone running the hub's obfuscated build for a long time.
+-- (The empty tabs reported the same day were NOT this: see GAME UPDATES.)
 -- Now the build takes a one-frame breath every 50ms of work. Only the thread
 -- building the menu ever waits here, and only until the build is finished.
 SESSION.buildThread = coroutine.running()
@@ -660,6 +654,106 @@ function SESSION.IsDesktop()
 		end
 	end
 	return SESSION.desktop
+end
+
+-- GAME UPDATES (2026-10-13, "the categories are empty except teleport", "the UI
+-- opens but on a blank page" after a rejoin). The game was updated on
+-- 2026-10-12. Every remote used to be looked up with WaitForChild and NO time
+-- limit, so when an update removes or renames one, that line waits forever and
+-- nothing built after it ever appears. The Auction remotes come right after
+-- Teleport's Vehicle section: Teleport was complete, Auto Farm had only its
+-- Truck section, every other tab was empty. Servers started before the update
+-- still had the old remotes, which is why a long session was fine until the
+-- rejoin put it on a new server.
+-- REMOTES.Get gives a missing remote a few seconds, then hands back a stand-in
+-- so the menu keeps building. The stand-in takes every call: it forwards to
+-- the real remote if that ever turns up, otherwise it does nothing, so only the
+-- feature that needs it stops working. REMOTES.missing feeds the status box on
+-- Auto Farm and the console.
+REMOTES.missing, REMOTES.listed = {}, {}
+function REMOTES.Stub(parent, name, path)
+	local stub = { Name = path, Missing = true }
+	function stub.Resolve()
+		local folder = parent
+		if type(folder) == "table" and folder.Resolve then
+			folder = folder.Resolve()
+		end
+		return typeof(folder) == "Instance" and folder:FindFirstChild(name) or nil
+	end
+	stub.OnClientEvent = {
+		Connect = function(_, fn)
+			local conn = { Connected = true }
+			function conn.Disconnect()
+				conn.Connected = false
+				if conn.real then
+					conn.real:Disconnect()
+				end
+			end
+			task.spawn(function()
+				while conn.Connected and SESSION.alive do
+					local real = stub.Resolve()
+					if real then
+						conn.real = real.OnClientEvent:Connect(fn)
+						return
+					end
+					task.wait(10)
+				end
+			end)
+			return conn
+		end,
+	}
+	function stub.FireServer(_, ...)
+		local real = stub.Resolve()
+		if real then
+			return real:FireServer(...)
+		end
+	end
+	function stub.InvokeServer(_, ...)
+		local real = stub.Resolve()
+		if real then
+			return real:InvokeServer(...)
+		end
+		return nil
+	end
+	function stub.FindFirstChild(_, child)
+		local real = stub.Resolve()
+		return real and real:FindFirstChild(child) or nil
+	end
+	function stub.WaitForChild(self, child)
+		return REMOTES.Get(self, child)
+	end
+	return stub
+end
+function REMOTES.Get(parent, name)
+	if type(parent) == "table" and parent.Resolve then
+		-- Its folder was missing (and is already listed).
+		local folder = parent.Resolve()
+		if not folder then
+			return REMOTES.Stub(parent, name, parent.Name .. "." .. tostring(name))
+		end
+		parent = folder
+	end
+	local found = parent:FindFirstChild(name)
+	if not found then
+		-- A brand-new server can still be sending the game over. Once it says
+		-- it has loaded, a remote that is still not there is not coming.
+		local deadline = os.clock() + 30
+		while not game:IsLoaded() and os.clock() < deadline do
+			task.wait(0.25)
+		end
+		found = parent:WaitForChild(name, 3)
+	end
+	if found then
+		return found
+	end
+	local path = parent.Name .. "." .. tostring(name)
+	if not REMOTES.listed[path] then
+		REMOTES.listed[path] = true
+		table.insert(REMOTES.missing, path)
+		warn("[Remotes] " .. path .. " is not in this server's version of the game. "
+			.. "The feature that uses it does nothing until the script is updated; everything else works.")
+	end
+	return REMOTES.Stub(parent, name, path)
 end
 
 -- ONE feature moves your character at a time. Auto Farm and Auto Fish own
@@ -1578,11 +1672,13 @@ task.spawn(function()
 		end)
 	end
 	if SESSION.built then
+		local text = "Every tab is ready (" .. math.floor(os.clock() - startedAt) .. "s). Start with STEP 1 below."
+		if #REMOTES.missing > 0 then
+			text = text .. "\nGame update: this server has no " .. table.concat(REMOTES.missing, ", ")
+				.. ". The feature that uses it does nothing for now; everything else works."
+		end
 		pcall(function()
-			SESSION.loadStatus:Set({
-				Title = "Script loaded",
-				Content = "Every tab is ready (" .. math.floor(os.clock() - startedAt) .. "s). Start with STEP 1 below.",
-			})
+			SESSION.loadStatus:Set({ Title = "Script loaded", Content = text })
 		end)
 	end
 end)
@@ -2058,9 +2154,9 @@ function TPCACHE.StandFacing(root, reach)
 end
 
 -- NPC SHOPPER AUTO-ACCEPT
-REMOTES.NPCShopper = Events:WaitForChild("NPCShopper")
-REMOTES.ShowOffer = REMOTES.NPCShopper:WaitForChild("ShowOffer")
-REMOTES.RespondOffer = REMOTES.NPCShopper:WaitForChild("RespondOffer")
+REMOTES.NPCShopper = REMOTES.Get(Events, "NPCShopper")
+REMOTES.ShowOffer = REMOTES.Get(REMOTES.NPCShopper, "ShowOffer")
+REMOTES.RespondOffer = REMOTES.Get(REMOTES.NPCShopper, "RespondOffer")
 
 
 SESSION.Track(REMOTES.ShowOffer.OnClientEvent:Connect(function(guid, npcModel, _, offerPrice, referencePrice)
@@ -4231,18 +4327,18 @@ local function IsCarryableExcluded(item)
 	return false
 end
 
-REMOTES.InventoryEvents = Events:WaitForChild("Inventory")
-REMOTES.GetPlayerInventory = REMOTES.InventoryEvents:WaitForChild("GetPlayerInventory")
-REMOTES.EquipItem = REMOTES.InventoryEvents:WaitForChild("EquipItem")
+REMOTES.InventoryEvents = REMOTES.Get(Events, "Inventory")
+REMOTES.GetPlayerInventory = REMOTES.Get(REMOTES.InventoryEvents, "GetPlayerInventory")
+REMOTES.EquipItem = REMOTES.Get(REMOTES.InventoryEvents, "EquipItem")
 -- RemoteFunction, InvokeServer(guid) -- TOGGLES (there is no separate
 -- set-false call) and returns the item's new Favorited state. Measured live
 -- 2026-09-13 via the `real` MCP against ReplicatedStorage.Modules.Screens.
 -- PlayerInventory's own DetailFavoriteButton handler.
-REMOTES.ToggleFavoriteItem = REMOTES.InventoryEvents:WaitForChild("ToggleFavoriteItem")
-REMOTES.PlotEvents = Events:WaitForChild("Plot")
-REMOTES.PlaceStockItem = REMOTES.PlotEvents:WaitForChild("PlaceStockItem")
-REMOTES.PlaceStockItemResult = REMOTES.PlotEvents:WaitForChild("PlaceStockItemResult")
-REMOTES.GetShopStock = REMOTES.PlotEvents:WaitForChild("GetShopStock")
+REMOTES.ToggleFavoriteItem = REMOTES.Get(REMOTES.InventoryEvents, "ToggleFavoriteItem")
+REMOTES.PlotEvents = REMOTES.Get(Events, "Plot")
+REMOTES.PlaceStockItem = REMOTES.Get(REMOTES.PlotEvents, "PlaceStockItem")
+REMOTES.PlaceStockItemResult = REMOTES.Get(REMOTES.PlotEvents, "PlaceStockItemResult")
+REMOTES.GetShopStock = REMOTES.Get(REMOTES.PlotEvents, "GetShopStock")
 
 -- REAL confirmation of a placement, by requestId (GUID generated at
 -- FireServer time). Confirmed by reading the real game script
@@ -4275,10 +4371,10 @@ SESSION.Track(REMOTES.PlaceStockItemResult.OnClientEvent:Connect(function(reques
 	end
 end))
 
-REMOTES.MiscEvents = Events:WaitForChild("Misc")
-REMOTES.FishingCast = REMOTES.MiscEvents:WaitForChild("FishingCast")
-REMOTES.FishingState = REMOTES.MiscEvents:WaitForChild("FishingState")
-REMOTES.FishingResult = REMOTES.MiscEvents:WaitForChild("FishingResult")
+REMOTES.MiscEvents = REMOTES.Get(Events, "Misc")
+REMOTES.FishingCast = REMOTES.Get(REMOTES.MiscEvents, "FishingCast")
+REMOTES.FishingState = REMOTES.Get(REMOTES.MiscEvents, "FishingState")
+REMOTES.FishingResult = REMOTES.Get(REMOTES.MiscEvents, "FishingResult")
 
 local function CountInventoryItems(inventory)
 	local count = 0
@@ -4545,12 +4641,12 @@ end
 -- expiry -> claim. Only the remotes, the "ready to claim" field
 -- (Washed/Grade) and the predicate vary. PASSIVE: never touch the HRP.
 local function MakeSlotMachine(cfg)
-	local evts = Events:WaitForChild(cfg.folder)
+	local evts = REMOTES.Get(Events, cfg.folder)
 	local m = {
-		getState = evts:WaitForChild("GetSlotState"),
-		startRemote = evts:WaitForChild(cfg.startRemote),
-		collectRemote = evts:WaitForChild(cfg.collectRemote),
-		claimRemote = evts:WaitForChild(cfg.claimRemote),
+		getState = REMOTES.Get(evts, "GetSlotState"),
+		startRemote = REMOTES.Get(evts, cfg.startRemote),
+		collectRemote = REMOTES.Get(evts, cfg.collectRemote),
+		claimRemote = REMOTES.Get(evts, cfg.claimRemote),
 		tag = cfg.tag,
 		readyField = cfg.readyField,
 		guardKey = cfg.guardKey,
@@ -6928,8 +7024,8 @@ for _, tp in ipairs({
 end
 
 -- TRUCK CARGO TRANSFER
-REMOTES.VehiclesEvents = Events:WaitForChild("Vehicles")
-REMOTES.TransferVehicleItemsToInventory = REMOTES.VehiclesEvents:WaitForChild("TransferVehicleItemsToInventory")
+REMOTES.VehiclesEvents = REMOTES.Get(Events, "Vehicles")
+REMOTES.TransferVehicleItemsToInventory = REMOTES.Get(REMOTES.VehiclesEvents, "TransferVehicleItemsToInventory")
 
 local function GetTruckItemGUIDs(truck)
 	local guids = {}
@@ -6985,8 +7081,8 @@ TABS.Farm:CreateLabel("Must be seated in the Truck for this to work")
 -- discontinuities. Applies ONLY if the player is not seated in it.
 -- No confirmation event -> we poll the seated state.
 local VEHICLESPAWN = {
-	Remote = REMOTES.VehiclesEvents:WaitForChild("RequestSpawn"),
-	Result = REMOTES.VehiclesEvents:WaitForChild("SpawnResult"),
+	Remote = REMOTES.Get(REMOTES.VehiclesEvents, "RequestSpawn"),
+	Result = REMOTES.Get(REMOTES.VehiclesEvents, "SpawnResult"),
 	Timeout = 5,
 }
 
@@ -8397,21 +8493,21 @@ function IGNOREBID.Check(garage)
 end
 
 -- AUTO BID
-REMOTES.AuctionEvents = Events:WaitForChild("Auction")
-REMOTES.UpdateBidEvent = REMOTES.AuctionEvents:WaitForChild("UpdateCurrentWinningBid")
-REMOTES.BidRemote = REMOTES.AuctionEvents:WaitForChild("Bid")
-REMOTES.LeaveAuctionRemote = REMOTES.AuctionEvents:WaitForChild("LeaveAuction")
-REMOTES.LostFoundOverride = REMOTES.AuctionEvents:WaitForChild("LostFoundOverride")
+REMOTES.AuctionEvents = REMOTES.Get(Events, "Auction")
+REMOTES.UpdateBidEvent = REMOTES.Get(REMOTES.AuctionEvents, "UpdateCurrentWinningBid")
+REMOTES.BidRemote = REMOTES.Get(REMOTES.AuctionEvents, "Bid")
+REMOTES.LeaveAuctionRemote = REMOTES.Get(REMOTES.AuctionEvents, "LeaveAuction")
+REMOTES.LostFoundOverride = REMOTES.Get(REMOTES.AuctionEvents, "LostFoundOverride")
 
 -- AUTO WIN, sequence verified in game: take the lead -> pause (freezes
 -- your bid ~120 s, NPCs stop outbidding) -> physically LEAVE the zone
 -- (the "Return to the auction!" countdown is cosmetic, it is the SERVER
 -- that checks the position: you really have to move the HRP) -> wait
 -- for the win -> come back.
-REMOTES.RequestAuctionPause = REMOTES.AuctionEvents:WaitForChild("RequestAuctionPause")
+REMOTES.RequestAuctionPause = REMOTES.Get(REMOTES.AuctionEvents, "RequestAuctionPause")
 
 
-REMOTES.AuctionPickupStart = REMOTES.AuctionEvents:WaitForChild("AuctionPickupStart")
+REMOTES.AuctionPickupStart = REMOTES.Get(REMOTES.AuctionEvents, "AuctionPickupStart")
 SESSION.Track(REMOTES.AuctionPickupStart.OnClientEvent:Connect(function()
 	AUCTION.resolved = true
 end))
@@ -8738,9 +8834,9 @@ AuctionTab:CreateLabel("Delete only if the game changed its items.")
 -- =========================================================
 local ENERGYDRINK = {
 	Catalog = SafeRequire(ReplicatedStorage.Modules.EnergyDrinks, "EnergyDrinks") or {},
-	GetCatalog = Events:WaitForChild("EnergyShop"):WaitForChild("GetCatalog"),
-	BuyDrink = Events:WaitForChild("EnergyShop"):WaitForChild("BuyDrink"),
-	UseEnergyDrink = Events:WaitForChild("UI"):WaitForChild("UseEnergyDrink"),
+	GetCatalog = REMOTES.Get(REMOTES.Get(Events, "EnergyShop"), "GetCatalog"),
+	BuyDrink = REMOTES.Get(REMOTES.Get(Events, "EnergyShop"), "BuyDrink"),
+	UseEnergyDrink = REMOTES.Get(REMOTES.Get(Events, "UI"), "UseEnergyDrink"),
 	autoBuyEnabled = false,
 	autoBuySelected = {}, -- set of drink ids ("1","2","3")
 	autoUseEnabled = false,
@@ -9530,16 +9626,16 @@ DrinksTab:CreateLabel("Wears this loadout to drink, then switches back. Unlocked
 --   SEARCHING  : not bidding, not collecting
 --   BIDDING    : bid session active
 --   COLLECTING : auction won, collecting the garage
-REMOTES.UIEvents = Events:WaitForChild("UI")
-REMOTES.ToggleBiddingUI = REMOTES.AuctionEvents:WaitForChild("ToggleBiddingUI")
-REMOTES.ToggleAuctionArea = REMOTES.AuctionEvents:WaitForChild("ToggleAuctionArea")
+REMOTES.UIEvents = REMOTES.Get(Events, "UI")
+REMOTES.ToggleBiddingUI = REMOTES.Get(REMOTES.AuctionEvents, "ToggleBiddingUI")
+REMOTES.ToggleAuctionArea = REMOTES.Get(REMOTES.AuctionEvents, "ToggleAuctionArea")
 
 -- The server charges the entry fee the instant it ACCEPTS us into a garage,
 -- about 20ms after the prompt is fired. Captured live 2026-09-09: that is the
 -- only unambiguous "you are in" signal the game sends. A refused entry sends
 -- ToggleAuctionArea(true) exactly like an accepted one, and no fee -- which is
 -- why firing the prompt and hoping looked like the garage silently ignoring us.
-REMOTES.AuctionFeePaid = REMOTES.AuctionEvents:WaitForChild("AuctionFeePaid")
+REMOTES.AuctionFeePaid = REMOTES.Get(REMOTES.AuctionEvents, "AuctionFeePaid")
 SESSION.Track(REMOTES.AuctionFeePaid.OnClientEvent:Connect(function(amount)
 	FARM.feePaidSeq = (FARM.feePaidSeq or 0) + 1
 	-- The fee IS the commit resolving: we are in, and the ~6s countdown the
@@ -9550,8 +9646,8 @@ SESSION.Track(REMOTES.AuctionFeePaid.OnClientEvent:Connect(function(amount)
 	FARM.committedAt = nil
 	DebugPrint("[AutoFarm] Entry accepted, fee " .. tostring(amount) .. " paid")
 end))
-REMOTES.NPCChat = REMOTES.UIEvents:WaitForChild("NPCChat")
-REMOTES.Notify = REMOTES.UIEvents:WaitForChild("Notify")
+REMOTES.NPCChat = REMOTES.Get(REMOTES.UIEvents, "NPCChat")
+REMOTES.Notify = REMOTES.Get(REMOTES.UIEvents, "Notify")
 
 
 -- Forward declaration: RunAutoWinSequence (defined just below) calls
@@ -10002,8 +10098,8 @@ end)
 -- macro navigation -> allowed everywhere (standalone and master).
 local ACTIVATION_DISTANCE = 10
 
-REMOTES.HotbarEvents = Events:WaitForChild("Hotbar")
-REMOTES.EquipTool = REMOTES.HotbarEvents:WaitForChild("EquipTool")
+REMOTES.HotbarEvents = REMOTES.Get(Events, "Hotbar")
+REMOTES.EquipTool = REMOTES.Get(REMOTES.HotbarEvents, "EquipTool")
 
 -- Auto-equips the wrench (Wrench0) on a broken item before picking it
 -- up. Can be disabled if the player wants to pick up broken items as is.
@@ -10332,7 +10428,7 @@ local SEIZED = {
 }
 
 do
-	local SeizedGarageRemote = Events:WaitForChild("Misc"):WaitForChild("SeizedGarage")
+	local SeizedGarageRemote = REMOTES.Get(REMOTES.Get(Events, "Misc"), "SeizedGarage")
 
 	SESSION.Track(SeizedGarageRemote.OnClientEvent:Connect(function(action, guid)
 		if action == "Set" and type(guid) == "string" then
@@ -14993,9 +15089,9 @@ ProcessingTab:CreateParagraph({
 -- Rate = Pawn.GetPawnState.rate (multiplicative: 0.85 = -15%).
 -- Favorited items are NEVER sold.
 local AUTOSELL = {
-	GetSellableItems = Events:WaitForChild("Pawn"):WaitForChild("GetSellableItems"),
-	GetPawnState = Events:WaitForChild("Pawn"):WaitForChild("GetPawnState"),
-	SellItems = Events:WaitForChild("Pawn"):WaitForChild("SellItems"),
+	GetSellableItems = REMOTES.Get(REMOTES.Get(Events, "Pawn"), "GetSellableItems"),
+	GetPawnState = REMOTES.Get(REMOTES.Get(Events, "Pawn"), "GetPawnState"),
+	SellItems = REMOTES.Get(REMOTES.Get(Events, "Pawn"), "SellItems"),
 	enabled = false,
 	-- GUIDs the server has refused, guid -> os.clock() when it said no.
 	-- See the isolation pass in RunPass for why this has to be learned
