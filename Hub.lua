@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-10-17 10:22:08
+    Build: 2026-10-17 10:25:23
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -13,6 +13,7 @@ local MAP = {
 	["5666473198"] = {{n="Soccer-Touch-Football",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Soccer-Touch-Football"}},
 	["6035872082"] = {{n="RIVALS_skinChanger",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Rivals"}},
 	["7488668004"] = {{n="Bake-or-Die",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Bake-or-Die"}},
+	["7633926880"] = {{n="BloxStrike",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/BloxStrike"}},
 	["8841437826"] = {{n="Capybaras-VS-Plants",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Capybaras-VS-Plants"}},
 	["9330616906"] = {{n="BE-A-FISH-BAIT",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/BE-A-FISH-BAIT"}},
 	["9348272796"] = {{n="Survive-Zombie-Arena",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Survive-Zombie-Arena"}},
