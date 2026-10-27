@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-10-27 08:44:39
+    Build: 2026-10-27 14:09:44
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -39,6 +39,7 @@ local MAP = {
 	["10514280922"] = {{n="Roll-A-Gnome",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Roll-A-Gnome"}},
 	["10526853622"] = {{n="Deep-Fishing",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Deep-Fishing"}},
 	["10561166339"] = {{n="Destroy-a-Vault",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Destroy-a-Vault"}},
+	["10629695169"] = {{n="Tap-Simulator-REBORN",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Tap-Simulator-REBORN"}},
 	["10636331438"] = {{n="Roll-a-Fisherman",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Roll-a-Fisherman"}},
 	["10648820673"] = {{n="Karinderya",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Karinderya"}},
 	["10708913337"] = {{n="Anime-Dice",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Anime-Dice"}},
