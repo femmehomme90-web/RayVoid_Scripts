@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-10-28 14:01:07
+    Build: 2026-10-29 09:50:18
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -44,6 +44,7 @@ local MAP = {
 	["10648820673"] = {{n="Karinderya",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Karinderya"}},
 	["10708913337"] = {{n="Anime-Dice",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Anime-Dice"}},
 	["10740316645"] = {{n="My-Anime-Mine",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/My-Anime-Mine"}},
+	["10765288803"] = {{n="Break-and-Steal-an-Egg",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Break-and-Steal-an-Egg"}},
 	["10768292556"] = {{n="Grow-a-Plant",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Grow-a-Plant"}},
 }
 
@@ -87,7 +88,14 @@ if entries and #entries == 1 then
     return
 end
 
--- A partir d'ici on a besoin de l'interface (selection ou jeu non supporte).
+-- Aucun script pour ce jeu : pas d'interface, juste un warn et le Discord copie.
+if not entries or #entries == 0 then
+    copyText(DISCORD)
+    warn("[VoidHub] No script for this game. Join the Discord (invite copied to your clipboard): " .. DISCORD)
+    return
+end
+
+-- A partir d'ici on a besoin de l'interface (selection de script).
 local okUi, Ui = pcall(function()
     return loadstring(game:HttpGet(UI_URL))()
 end)
@@ -130,26 +138,3 @@ if entries and #entries > 1 then
 
     return
 end
-
--- [ Aucun script pour ce jeu : ecran minimal, redirection Discord uniquement ]
-local Window = Ui:CreateWindow({
-    Name = "VoidHub",
-    LoadingTitle = "VoidHub",
-    LoadingSubtitle = "by AKkiwi",
-    ConfigurationSaving = { Enabled = true, FolderName = "VoidHub", FileName = "hub" },
-})
-
-local Info = Window:CreateTab("Not Supported", "bug")
-
-Info:CreateParagraph({
-    Title = "This script isn't supported",
-    Content = "This game isn't supported. Join the Discord to see every available game.",
-})
-
-Info:CreateButton({
-    Name = "Copy Discord invite",
-    Callback = function()
-        copyText(DISCORD)
-        Ui:Notify({ Title = "Copied", Content = "Discord invite copied to clipboard.", Duration = 4 })
-    end,
-})
