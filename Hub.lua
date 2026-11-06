@@ -1,7 +1,7 @@
 --[[
     VoidHub -- point d'entree unique
     Genere automatiquement par voidhub-bridge, ne pas editer a la main.
-    Build: 2026-11-06 12:08:18
+    Build: 2026-11-06 13:19:41
 ]]
 
 local UI_URL  = "https://raw.githubusercontent.com/csgo1compte-cloud/RayVoidUi/refs/heads/main/RayVoid"
@@ -45,6 +45,7 @@ local MAP = {
 	["10708913337"] = {{n="Anime-Dice",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Anime-Dice"}},
 	["10740316645"] = {{n="My-Anime-Mine",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/My-Anime-Mine"}},
 	["10765288803"] = {{n="Break-and-Steal-an-Egg",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Break-and-Steal-an-Egg"}},
+	["10766972131"] = {{n="Throw-Food-For-Animals",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Throw-Food-For-Animals"}},
 	["10768292556"] = {{n="Grow-a-Plant",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Grow-a-Plant"}},
 	["10769315427"] = {{n="Steal-A-Pet-And-Ride-It",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Steal-A-Pet-And-Ride-It"}},
 	["10771053183"] = {{n="Net-a-Fish",u="https://raw.githubusercontent.com/femmehomme90-web/RayVoid_Scripts/main/Net-a-Fish"}},
